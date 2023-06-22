@@ -4,6 +4,29 @@ require_once 'src/database/database.php';
 
 class User{
 
+    public function createUser(){
+        $db = new Database;
+        $connection = $db->getConnection();
+
+        $hashedPassword = password_hash($this->getPassword(), PASSWORD_DEFAULT);
+
+
+
+
+        $request = $connection->prepare('INSERT INTO users (firstName, lastName, email, password, username) VALUES (:firstName, :lastName, :email, :password, :username)');
+
+        $request->bindParam(":firstName", $this->firstName);
+        $request->bindParam(":lastName", $this->lastName);
+        $request->bindParam(":email", $this->email);
+        $request->bindParam(":password", $hashedPassword);
+        $request->bindParam(":username", $this->username);
+
+        if($request->execute()){
+            return true;
+        }
+        return false;
+    }
+
     public function setId($id):void{
         $this->id = $id;
     }
@@ -50,26 +73,6 @@ class User{
 
     public function getUsername(){
         return $this->username;
-    }
-
-    public function createUser(){
-        $db = new Database;
-        $connection = $db->getConnection();
-
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
-
-        $connection->prepare('INSERT INTO users ( firstName, lastName, email, password, username) VALUES ( :firstName, :lastName, :email, :password, :username)');
-
-        $connection->bindParam(":firstName", $this->firstName);
-        $connection->bindParam(":lastName", $this->lastName);
-        $connection->bindParam(":email", $this->email);
-        $connection->bindParam(":password", $hashedPassword);
-        $connection->bindParam(":username", $this->username);
-
-        if($connection->execute()){
-            return true;
-        }
-        return false;
     }
 }
 ?>
