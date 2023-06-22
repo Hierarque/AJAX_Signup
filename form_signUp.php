@@ -19,7 +19,7 @@ $user->setPassword($password);
 
 $success = $user->createUser();
 
-echo $success ? "failed to create user" : "user created successfully";
+echo $success ? "user created successfully" : "failed to create user";
 
 
 ?>
