@@ -4,7 +4,7 @@ require_once 'src/models/user.php';
 
 $success = false;
 
-$firstName = $_REQUEST['firstName'];
+$firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
 $email = $_POST['email'];
 $username = $_POST['username'];
